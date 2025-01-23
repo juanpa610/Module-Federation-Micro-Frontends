@@ -3,3 +3,79 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - name: 'S3_BUCKET_NAME'
+    value: 'Azure-DevOps-Bucket-S3'
+  - name: 'AWS_REGION'
+    value: 'us-east-1'
+
+steps:
+# Paso 1: Instalar Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+# Paso 2: Instalar AWS CLI
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y awscli
+  displayName: 'Instalar AWS CLI'
+
+# Paso 3: Instalar Angular CLI y dependencias
+- script: |
+    npm install -g @angular/cli
+    npm install
+  displayName: 'npm install'
+
+# Paso 4: Construir la aplicación `micro-front`
+- script: |
+    npm run build micro-front
+  displayName: 'Build micro-front'
+
+# Paso 5: Construir la aplicación `host`
+- script: |
+    npm run build host
+  displayName: 'Build host'
+
+# Paso 6: Construir la aplicación `host`
+- script: |
+    if ! aws s3api head-bucket --bucket $(S3_BUCKET_NAME) 2>/dev/null; then
+      echo "El bucket no existe. Creando bucket..."
+      aws s3api create-bucket --bucket $(S3_BUCKET_NAME) --region $(AWS_REGION)
+    else
+      echo "El bucket ya existe."
+    fi
+  displayName: 'Verificar y crear bucket de S3'
+
+# Paso 7: Subir los archivos de `micro-front/dist` a S3
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'Azure-AWS-S3'
+    regionName: 'us-east-1'
+    bucketName: $(S3_BUCKET_NAME)
+    sourceFolder: '$(Build.SourcesDirectory)/dist/micro-front' 
+    targetFolder: 'micro-front'  
+    globExpressions: '**'  
+    filesAcl: 'public-read'  
+    createBucket: false  
+  displayName: 'Upload micro-front to S3'
+
+# Paso 8: Subir los archivos de `host/dist` a S3
+- task: S3Upload@1
+  inputs:
+    awsCredentials: 'Azure-AWS-S3'
+    regionName: 'us-east-1'
+    bucketName: $(S3_BUCKET_NAME)
+    sourceFolder: '$(Build.SourcesDirectory)/dist/host'  
+    targetFolder: 'host'  
+    globExpressions: '**'  
+    filesAcl: 'public-read'  
+    createBucket: false 
+  displayName: 'Upload host to S3'
