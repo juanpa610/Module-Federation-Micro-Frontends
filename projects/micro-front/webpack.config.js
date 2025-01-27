@@ -5,11 +5,12 @@ module.exports = withModuleFederationPlugin({
   name: 'micro-front',
 
   exposes: {
-    './ShowinfoModule': './projects/micro-front/src/app/showinfo/showinfo.module.ts',
+    './AppComponent': './projects/micro-front/src/app/app.component.ts',
   },
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+    // 'shared': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
   },
 
 });

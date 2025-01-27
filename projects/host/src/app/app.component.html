@@ -1,2 +1,8 @@
-<h1>Hola soy el host </h1>
+<h1>Hola SOY EL HOST </h1>
+
+<button (click)="increment()">Increment</button>
+<button (mousedown)="decrement()">Decrement</button>
+<button (click)="reset()">Reset</button>
+<div>Counter: {{ counter$ | async }}</div>
+
 <router-outlet />

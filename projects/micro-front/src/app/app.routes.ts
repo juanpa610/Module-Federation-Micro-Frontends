@@ -1,11 +1,14 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path: '',
-        loadComponent: () => import('./default/default.component').then(m => m.DefaultComponent)
+        path: 'micro',
+        loadComponent: () => import('./default/default.component').then(m => m.DefaultComponent),
+        // pathMatch: 'full'
     },
     {
         path: 'micro-frontend', loadChildren: ()=> import('./showinfo/showinfo.module').then(m => m.ShowinfoModule)
     }
 ];
+

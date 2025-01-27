@@ -26,7 +26,7 @@ steps:
     versionSpec: '20.x'
   displayName: 'Install Node.js'
 
-# Paso 3: Instalar AWS CLI (opcional, solo si necesitas AWS CLI para otros pasos)
+# Paso 3: Instalar AWS CLI 
 - script: |
     Invoke-WebRequest -Uri "https://awscli.amazonaws.com/AWSCLIV2.msi" -OutFile "$env:TEMP\AWSCLIV2.msi"
     Start-Process msiexec.exe -ArgumentList '/i "$env:TEMP\AWSCLIV2.msi" /quiet /norestart' -NoNewWindow -Wait
@@ -34,7 +34,7 @@ steps:
     aws --version
   displayName: 'Instalar AWS CLI'
 
-# Paso 4: Instalar Angular CLI y dependencias
+# Paso 4: Instalar Angular CLI 
 - script: |
     npm install -g @angular/cli
     npm install
@@ -58,25 +58,25 @@ steps:
 # Paso 8: Crear el bucket de S3
 - task: S3Upload@1
   inputs:
-    awsCredentials: 'Azure-AWS-S3'  # Usa el Service Connection de AWS
-    regionName: '$(AWS_REGION)'     # Región de AWS
-    bucketName: '$(S3_BUCKET_NAME)' # Nombre del bucket
-    sourceFolder: '$(Build.SourcesDirectory)/dist/host' # Carpeta de origen (host)
-    targetFolder: ''                # Carpeta de destino en S3 (raíz del bucket)
-    globExpressions: '**'           # Sube todos los archivos de dist/host
-    filesAcl: 'private'             # Usa 'private' en lugar de 'public-read'
-    createBucket: true              # Crear el bucket si no existe
+    awsCredentials: 'Azure-AWS-S3'
+    regionName: '$(AWS_REGION)'
+    bucketName: '$(S3_BUCKET_NAME)'
+    sourceFolder: '$(Build.SourcesDirectory)/dist/host'
+    targetFolder: ''
+    globExpressions: '**'
+    filesAcl: 'private'
+    createBucket: true             
   displayName: 'Subir host a la raíz del bucket'
 
 # Paso 9: Subir los archivos de `micro-front` a una subcarpeta
 - task: S3Upload@1
   inputs:
-    awsCredentials: 'Azure-AWS-S3'  # Usa el Service Connection de AWS
-    regionName: '$(AWS_REGION)'     # Región de AWS
-    bucketName: '$(S3_BUCKET_NAME)' # Nombre del bucket
-    sourceFolder: '$(Build.SourcesDirectory)/dist/micro-front' # Carpeta de origen (micro-front)
-    targetFolder: 'micro-front'     # Carpeta de destino en S3 (subcarpeta micro-front)
-    globExpressions: '**'           # Sube todos los archivos de dist/micro-front
-    filesAcl: 'private'             # Usa 'private' en lugar de 'public-read'
-    createBucket: false             # No crear el bucket (ya se creó en el paso anterior)
+    awsCredentials: 'Azure-AWS-S3'
+    regionName: '$(AWS_REGION)'
+    bucketName: '$(S3_BUCKET_NAME)'
+    sourceFolder: '$(Build.SourcesDirectory)/dist/micro-front'
+    targetFolder: 'micro-front'
+    globExpressions: '**'
+    filesAcl: 'private'
+    createBucket: false
   displayName: 'Subir micro-front a la subcarpeta micro-front'
