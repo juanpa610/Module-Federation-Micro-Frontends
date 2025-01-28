@@ -13,8 +13,8 @@ export class MaskCardNumberPipe implements PipeTransform {
     const maskedPrefix = prefix.replace(/[0-9]/g, '•');
 
     const formattedPrefix = maskedPrefix.replace(/(.{4})/g, '$1 ').trim();
- 
+
     return `${formattedPrefix} ${suffix}`;
-}
+  }
 
 }
