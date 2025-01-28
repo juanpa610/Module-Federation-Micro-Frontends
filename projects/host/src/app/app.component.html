@@ -1,8 +1,14 @@
-<h1>Hola SOY EL HOST </h1>
+<h1>Hola soy el HOST </h1>
 
-<button (click)="increment()">Increment</button>
-<button (mousedown)="decrement()">Decrement</button>
-<button (click)="reset()">Reset</button>
-<div>Counter: {{ counter$ | async }}</div>
+<section class="container-cards" *ngIf="cards.length > 0">
+
+  <article class="container-cards__card" *ngFor="let card of cards">
+    <p class="container-cards__card__type">débito</p>
+    <p class="container-cards__card__number">{{ card.cardNumber | maskCardNumber }}</p>
+  </article>
+
+</section>
+
+<hr>
 
 <router-outlet />

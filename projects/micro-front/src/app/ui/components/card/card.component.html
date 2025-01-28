@@ -1,0 +1,15 @@
+<div class="card-form">
+    <h2>Agregar nueva tarjeta como metodo de pago</h2>
+    <form [formGroup]="cardForm" (ngSubmit)="addCard()">
+        <label for="cardNumber">Número de Tarjeta:</label>
+        <input type="text" id="cardNumber" formControlName="cardNumber" maxlength="12" placeholder="1234 5678 9123">
+        <div class="error" *ngIf="cardForm.get('cardNumber')?.errors?.['required'] && cardForm.touched">
+            Campo obligatorio
+        </div>
+        <div class="error" *ngIf="cardForm.get('cardNumber')?.errors?.['minlength']">
+            Número de tarjeta requiere 12 caracteres
+        </div>
+        <br>
+        <button type="submit" [disabled]="!cardForm.valid">Agregar Tarjeta</button>
+    </form>
+</div>

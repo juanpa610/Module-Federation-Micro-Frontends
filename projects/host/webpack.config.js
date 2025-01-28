@@ -2,9 +2,6 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
   name: 'host',
-  // exposes: {
-  //   './Component': './projects/host/src/app/app.component.ts',
-  // },
 
   remotes: {
     'micro-front': 'http://localhost:4000/remoteEntry.js',
@@ -12,7 +9,7 @@ module.exports = withModuleFederationPlugin({
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
-    // 'shared': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
+    'shared-library-cards': { singleton: true, strictVersion: false, requiredVersion: 'auto' },
   },
 
 });
