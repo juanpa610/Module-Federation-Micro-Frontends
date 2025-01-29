@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Card, CardStore, MaskCardNumberPipe } from 'shared-library-cards';
+import { Card, CardStore, MaskCardNumberPipe } from 'shared-library-cards-test';
 
 @Component({
   selector: 'app-root',

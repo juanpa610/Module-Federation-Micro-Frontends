@@ -1,5 +1,5 @@
 {
-  "name": "shared-library-cards",
+  "name": "shared-library-cards-test",
   "version": "0.0.2",
   "peerDependencies": {
     "@angular/common": "^19.0.0",

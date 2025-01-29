@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Card, CardUseCases } from 'shared-library-cards';
+import { Card, CardUseCases } from 'shared-library-cards-test';
 
 @Component({
   selector: 'app-card',

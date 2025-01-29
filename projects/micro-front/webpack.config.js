@@ -11,7 +11,7 @@ module.exports = withModuleFederationPlugin({
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
-    'shared-library-cards': { singleton: true, strictVersion: false, requiredVersion: 'auto' },
+    'shared-library-cards-test': { singleton: true, strictVersion: false, requiredVersion: 'auto' },
   },
 
 });
