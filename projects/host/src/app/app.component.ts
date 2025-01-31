@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { AppState, decrement, increment, reset } from 'shared';
+import { AlbumState, AppState, decrement, increment, loadAlbums, reset,  } from 'shared';
+import { Album } from '../../../shared/src/lib/store/albums/album.model';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,24 @@ import { AppState, decrement, increment, reset } from 'shared';
 export class AppComponent {
   title = 'host';
 
-  // counter$!: Observable<number>;
-  counter$: Observable<number> = of(1);
-  // time : NodeJS.Timeout | undefined;
+  albums$!: Observable<any>;
+  albums!: Album[];
+  loading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
 
-  constructor(private store: Store<AppState>) { }
+  counter$: Observable<number> = of(1);
+
+
+  constructor(private store: Store<AppState>, private albumStore: Store<AlbumState>) {
+    this.albumStore.dispatch(loadAlbums());
+    this.albums$ = this.albumStore.select(state => state);
+    // this.loading$ = this.albumStore.select();
+
+   this.albums$.subscribe(albums => {
+     console.log(albums);
+     this.albums = albums.album.albums;
+   });
+  }
 
   ngOnInit(): void {
     this.counter$ = this.store.select(state => {
@@ -32,11 +46,10 @@ export class AppComponent {
   }
 
   decrement() {
-      this.store.dispatch(decrement());
-    
+    this.store.dispatch(decrement());
+
   }
 
- 
   reset() {
     this.store.dispatch(reset());
   }

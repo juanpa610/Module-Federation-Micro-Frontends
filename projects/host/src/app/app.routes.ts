@@ -7,14 +7,14 @@ export const routes: Routes = [
     //     loadComponent: () => import('./home/home.component').then(c => c.HomeComponent)
     // },
     {
-        path: 'mf',
+        path: 'micro',
         loadComponent: () => import('micro-front/AppComponent').then((m) => m.AppComponent)
     },
-    // {
-    //     path: '',
-    //     redirectTo: 'home',
-    //     pathMatch: 'full'
-    // },
+    {
+        path: '',
+        redirectTo: 'micro',
+        pathMatch: 'full'
+    },
     // {
     //     path: '**',
     //     redirectTo: 'home',

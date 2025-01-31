@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { AppState } from '../index';
+import { AppState } from './index';
 
 export const selectCounter = (state: AppState) => state.counter
 

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "host": "ng s host",
+    "host": "ng s host -o",
     "micro-front": "ng s micro-front",
     "all": "npm-run-all --parallel micro-front host",
     "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"

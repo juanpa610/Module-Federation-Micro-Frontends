@@ -5,4 +5,14 @@
 <button (click)="reset()">Reset</button>
 <div>Counter: {{ counter$ | async }}</div>
 
+<hr>
+
+<ul>
+    <li *ngFor="let album of albums">
+      {{ album.title }} - {{ album.artist }}
+    </li>
+  </ul>
+
+<hr>
+
 <router-outlet />
