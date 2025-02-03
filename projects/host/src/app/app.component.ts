@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { AlbumState, AppState, decrement, increment, loadAlbums, reset,  } from 'shared';
+import { AlbumState, AppState, CounterState, decrement, increment, loadAlbums, reset, selectAlbums, selectCounterValue, selectLoading, } from 'shared';
 import { Album } from '../../../shared/src/lib/store/albums/album.model';
 
 @Component({
@@ -16,29 +16,21 @@ import { Album } from '../../../shared/src/lib/store/albums/album.model';
 export class AppComponent {
   title = 'host';
 
-  albums$!: Observable<any>;
-  albums!: Album[];
+  albums$!: Observable<Album[]>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
 
   counter$: Observable<number> = of(1);
 
 
-  constructor(private store: Store<AppState>, private albumStore: Store<AlbumState>) {
-    this.albumStore.dispatch(loadAlbums());
-    this.albums$ = this.albumStore.select(state => state);
-    // this.loading$ = this.albumStore.select();
-
-   this.albums$.subscribe(albums => {
-     console.log(albums);
-     this.albums = albums.album.albums;
-   });
+  constructor(private store: Store<AppState>) {
+    this.store.dispatch(loadAlbums());
+    this.albums$ = this.store.select(selectAlbums);
+    this.loading$ = this.store.select(selectLoading);
   }
 
   ngOnInit(): void {
-    this.counter$ = this.store.select(state => {
-      return state.counter
-    });
+    this.counter$ = this.store.select(selectCounterValue);
   }
 
   increment() {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of, pipe } from 'rxjs';
-import { AppState, increment, decrement, reset } from 'shared';
+import { CounterState, increment, decrement, reset } from 'shared';
 
 
 @Component({
@@ -12,13 +12,13 @@ import { AppState, increment, decrement, reset } from 'shared';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit  {
+export class HomeComponent implements OnInit {
 
   // counter$!: Observable<number>;
   counter$: Observable<number> = of(1);
- 
-  
-  constructor(private store: Store<AppState>) {}
+
+
+  constructor(private store: Store<CounterState>) { }
 
   ngOnInit(): void {
     // this.counter$ = this.store.select(state => state.counterr);
@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit  {
   }
 
   decrement() {
-      this.store.dispatch(decrement());
-   
+    this.store.dispatch(decrement());
+
   }
 
 

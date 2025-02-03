@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { AppState, decrement, increment } from 'shared';
+import { AppState, decrement, increment, selectCounterValue } from 'shared';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,10 +17,11 @@ export class AppComponent {
 
   counter$: Observable<number> = of(0);
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {
+  }
 
   ngOnInit(): void {
-    this.counter$ = this.store.select(state => state.counter);
+    this.counter$ = this.store.select(selectCounterValue);
   }
 
   increment() {

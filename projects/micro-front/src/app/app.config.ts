@@ -2,14 +2,14 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideState, provideStore } from '@ngrx/store';
-import { reducers } from 'shared';
+import { provideStore } from '@ngrx/store';
+import { appReducers } from 'shared';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore(reducers),
+    provideStore(appReducers),
     // provideState('microFront', reducers),
   ]
 };

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { AppState, decrement, increment } from 'shared';
+import { CounterState, decrement, increment } from 'shared';
 
 @Component({
   selector: 'app-default',
@@ -18,7 +18,7 @@ export class DefaultComponent implements OnInit {
   // constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-  //   this.counter$ = this.store.select(state => state.counter);
+    //   this.counter$ = this.store.select(state => state.counter);
   }
 
   // increment() {

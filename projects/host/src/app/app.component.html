@@ -8,11 +8,16 @@
 <hr>
 
 <ul>
-    <li *ngFor="let album of albums">
+    <li *ngFor="let album of albums$ | async">
       {{ album.title }} - {{ album.artist }}
     </li>
   </ul>
 
 <hr>
+
+<!-- loader -->
+<div class="container-loader" *ngIf="loading$ | async" >
+  <div class="container-loader__loader"></div>
+</div>
 
 <router-outlet />
